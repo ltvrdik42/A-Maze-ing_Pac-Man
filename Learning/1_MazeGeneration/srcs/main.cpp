@@ -31,17 +31,27 @@ int	main(int argc, char* argv[])
 
 	MazeGenerator		mg(width, height, seed);
 
+	// block some cells for later
+	mg.visit_cell(width - 1, height - 1);
+	mg.visit_cell(width - 2, height - 1);
+	mg.visit_cell(width - 1, height - 2);
+	mg.visit_cell(width - 2, height - 2);
+
+	//generate maze
 	mg.generate_maze();
-	// std::vector<std::vector<Cell>> maze_history = mg.share_history();
-	// visualise_maze(maze_history, width, height);
+	
+	// remove dead ends
+	mg.remove_deadends();
+
+	// increase connections
+
+	// flip horizontally
+	
+	// flip vertically
+	
+	
 	std::vector<Maze> maze_history = mg.share_maze_history();
 	visualise_maze(maze_history);
-	// generate maze
-	// remove dead ends
-	// increase connectivity (add loops)
-	// decrease connectivity (remove loops)
-	// double and flip horizontally/vertically
-
 	// convert maze to map
 	// add ghost area
 	// add portals

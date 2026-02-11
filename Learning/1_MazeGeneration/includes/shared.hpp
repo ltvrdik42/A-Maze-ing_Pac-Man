@@ -152,6 +152,13 @@ public:
         }
         return false;
     }
+    bool visit_cell(uint16_t x, uint16_t y) {
+        if (x < width && y < height && cells[y * width + x].visited == false) {
+            cells[y * width + x].visited = true;
+            return true;
+        }
+        return false;
+    }
     Cell& get_cell(uint16_t x, uint16_t y) { return cells[y * width + x]; }
     const Cell& get_cell(uint16_t x, uint16_t y) const { return cells[y * width + x]; }
 

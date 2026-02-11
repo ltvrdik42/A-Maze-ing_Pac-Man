@@ -23,11 +23,14 @@ public:
     // const Cell& get_cell(uint8_t x, uint8_t y) const;
 
     bool in_bounds(uint8_t x, uint8_t y) const;
+    bool visit_cell(uint8_t x, uint8_t y);
     // std::vector<Cell> get_maze() const;
     // std::vector<std::vector<Cell>> share_history() const;
     std::vector<Maze> share_maze_history() const;
 
     void generate_maze();
+
+    void remove_deadends();
 
 private:
     uint8_t m_width;
