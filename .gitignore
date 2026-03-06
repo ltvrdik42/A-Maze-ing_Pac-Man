@@ -42,6 +42,7 @@
 
 #custom
 build
+.*
 .DS_Store
 maze_generator
 map_generator
