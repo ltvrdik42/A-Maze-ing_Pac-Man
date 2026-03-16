@@ -55,6 +55,9 @@ void MapEditor::buildFromPath(const std::string& path) {
         for (std::uint32_t x = 0U; x < line.length(); ++x) {
             char tile = line[x];
             switch (tile) {
+                case ' ':
+                    setTile(x, y, TileType::Empty);
+                    break;
                 case '#':
                     setTile(x, y, TileType::Wall);
                     break;
@@ -63,6 +66,27 @@ void MapEditor::buildFromPath(const std::string& path) {
                     break;
                 case 'o':
                     setTile(x, y, TileType::PowerPellet);
+                    break;
+                case 'R':
+                    setTile(x, y, TileType::ReadySpawn);
+                    break;
+                case 'S':
+                    setTile(x, y, TileType::PlayerSpawn);
+                    break;
+                case 'B':
+                    setTile(x, y, TileType::BonusSpawn);
+                    break;
+                case 'g':
+                    setTile(x, y, TileType::Empty);
+                    break;
+                case 'G':
+                    setTile(x, y, TileType::GhostSpawn);
+                    break;
+                case '-':
+                    setTile(x, y, TileType::Door_EastWest);
+                    break;
+                case '*':
+                    setTile(x, y, TileType::Wall2);
                     break;
                 default:
                     setTile(x, y, TileType::Wall);
