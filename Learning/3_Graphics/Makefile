@@ -57,10 +57,10 @@ sdl:
 	@if [ ! -d "$(BUILD_DIR)" ]; then \
 		echo "Building SDL3 stack..."; \
 		mkdir -p $(SDL_SRC_DIR); \
-		git clone https://github.com/libsdl-org/SDL.git $(SDL_SRC_DIR)/SDL; \
-		git clone https://github.com/libsdl-org/SDL_image.git $(SDL_SRC_DIR)/SDL_image; \
-		git clone https://github.com/libsdl-org/SDL_ttf.git $(SDL_SRC_DIR)/SDL_ttf; \
-		git clone https://github.com/libsdl-org/SDL_mixer.git $(SDL_SRC_DIR)/SDL_mixer; \
+		git clone --depth 1 https://github.com/libsdl-org/SDL.git $(SDL_SRC_DIR)/SDL; \
+		git clone --depth 1 https://github.com/libsdl-org/SDL_image.git $(SDL_SRC_DIR)/SDL_image; \
+		git clone --depth 1 https://github.com/libsdl-org/SDL_ttf.git $(SDL_SRC_DIR)/SDL_ttf; \
+		git clone --depth 1 https://github.com/libsdl-org/SDL_mixer.git $(SDL_SRC_DIR)/SDL_mixer; \
 		mkdir -p $(BUILD_DIR); \
 		cd $(SDL_SRC_DIR)/SDL && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
 		cd ../SDL_image && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
