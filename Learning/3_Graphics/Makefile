@@ -37,6 +37,8 @@ SDL_LIB = -L$(BUILD_DIR)/lib \
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	SDL_LIB += -Wl,-rpath,@executable_path/$(BUILD_DIR)/lib
+else
+	SDL_LIB += -Wl,-rpath,'$$ORIGIN/$(BUILD_DIR)/lib'
 endif
 
 # =========================
@@ -48,9 +50,11 @@ INCLUDES = -I$(INCS_DIR) $(SDL_INC)
 # Rules
 all: sdl $(NAME)
 
+CMAKE_FLAGS = -DCMAKE_INSTALL_PREFIX=$(PWD)/$(BUILD_DIR) -DCMAKE_INSTALL_LIBDIR=lib
+
 # Build SDL stack only if build folder doesn't exist
 sdl:
-	if [ ! -d "$(BUILD_DIR)" ]; then \
+	@if [ ! -d "$(BUILD_DIR)" ]; then \
 		echo "Building SDL3 stack..."; \
 		mkdir -p $(SDL_SRC_DIR); \
 		git clone https://github.com/libsdl-org/SDL.git $(SDL_SRC_DIR)/SDL; \
@@ -58,10 +62,10 @@ sdl:
 		git clone https://github.com/libsdl-org/SDL_ttf.git $(SDL_SRC_DIR)/SDL_ttf; \
 		git clone https://github.com/libsdl-org/SDL_mixer.git $(SDL_SRC_DIR)/SDL_mixer; \
 		mkdir -p $(BUILD_DIR); \
-		cd $(SDL_SRC_DIR)/SDL && cmake -B build -DCMAKE_INSTALL_PREFIX=$(PWD)/$(BUILD_DIR) && cmake --build build --target install; \
-		cd ../SDL_image && cmake -B build -DCMAKE_INSTALL_PREFIX=$(PWD)/$(BUILD_DIR) && cmake --build build --target install; \
-		cd ../SDL_ttf && cmake -B build -DCMAKE_INSTALL_PREFIX=$(PWD)/$(BUILD_DIR) && cmake --build build --target install; \
-		cd ../SDL_mixer && cmake -B build -DCMAKE_INSTALL_PREFIX=$(PWD)/$(BUILD_DIR) && cmake --build build --target install; \
+		cd $(SDL_SRC_DIR)/SDL && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
+		cd ../SDL_image && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
+		cd ../SDL_ttf && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
+		cd ../SDL_mixer && cmake -B build $(CMAKE_FLAGS) && cmake --build build --target install; \
 		echo "SDL stack built successfully."; \
 	else \
 		echo "Build folder exists. Skipping SDL build."; \
