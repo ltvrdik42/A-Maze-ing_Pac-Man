@@ -21,7 +21,7 @@ SRCS = \
 	$(SRCS_DIR)/Map.cpp \
 	$(SRCS_DIR)/Graphic.cpp
 
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(SRCS:$(SRCS_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 # =========================
 # SDL3 + extensions
@@ -70,7 +70,8 @@ sdl:
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) $(SDL_LIB) -o $(NAME)
 
-%.o: %.cpp
+$(BUILD_DIR)/%.o: $(SRCS_DIR)/%.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
